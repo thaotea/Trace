@@ -132,9 +132,17 @@ docRef.get().then(function(doc) {
   initMap(doc)
   }
 });
-$('#updateButtonM').click(function(){
-  window.location = "addupdateMap.html?para1="+ queryString;
+
+//render petTest
+let docRef2 = db.collection("petTest").doc(queryString);
+docRef2.get().then(function(docs) {
+  if (docs.exists) {
+  renderNamePet(docs)
+  renderUpdate(docs)
+  initMap(docs)
+  }
 });
+
 // Initialize and add the map
 function initMap(doc) {
  const lat = doc.data().lat;
@@ -147,3 +155,7 @@ function initMap(doc) {
  // The marker, positioned at Uluru
  var marker = new google.maps.Marker({position: position, map: map});
 }
+
+$('#updateButtonM').click(function(){
+  window.location = "addupdateMap.html?para1="+ queryString;
+});
